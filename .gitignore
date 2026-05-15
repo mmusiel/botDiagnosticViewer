@@ -1,0 +1,13 @@
+# Node/React
+node_modules/
+dist/
+.env
+
+# C# / .NET
+bin/
+obj/
+appsettings.Development.json
+
+# OS generated files
+.DS_Store
+Thumbs.db
