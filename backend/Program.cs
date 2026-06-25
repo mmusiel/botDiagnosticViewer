@@ -14,7 +14,7 @@ app.UseCors("AllowAll");
 
 app.MapGet("/api/diagnostics/bolt", () =>
 {
-    var myBolt = new Bolt("Titanium", 2.0, 0.8, "A9A9A9");
+    var myBolt = new Bolt("Titanium", 6.0, 2.5, "FF0000");
     return myBolt;
 });
 

@@ -2,17 +2,24 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { useState, useEffect } from 'react'
 
-function Bolt() {
+function Bolt({ data }) {
+  if (!data) return null;
+
   return (
     <group>
+      {/* Bolt Shaft */}
       <mesh position={[0, 0, 0]}>
-        <cylinderGeometry args={[0.5, 0.5, 2, 32]} />
+        <cylinderGeometry args={[0.5, 0.5, data.shaftLength, 32]} />
         <meshStandardMaterial color="gray" />
       </mesh>
 
-      <mesh position={[0, 1.25, 0]}>
-        <cylinderGeometry args={[0.8, 0.8, 0.5, 6]} />
-        <meshStandardMaterial color="darkgray" />
+      {/* Bolt Head */}
+      {/* Need to adjust dynamically based on shaft length.
+          Divide the shaftLength by 2 to find the top edge, then add 0.25 to sit
+          the head on top */}
+      <mesh position={[0, (data.shaftLength / 2) + 0.25, 0]}>
+        <cylinderGeometry args={[data.headRadius, data.headRadius, 0.5, 6]} />
+        <meshStandardMaterial color={`#${data.hexColor}`} />
       </mesh>
     </group>
   )
@@ -38,7 +45,7 @@ function App() {
     <Canvas>
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} />
-      <Bolt />
+      <Bolt data={boltData}/>
       <OrbitControls />
     </Canvas>
   )
