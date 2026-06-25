@@ -1,5 +1,6 @@
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
+import { useState, useEffect } from 'react'
 
 function Bolt() {
   return (
@@ -18,6 +19,21 @@ function Bolt() {
 }
 
 function App() {
+  // state variable to hold backend data
+  const [boltData, setBoltData] = useState(null)
+
+  // make the call to th C# door when the app loads
+  useEffect(() => {
+    fetch('http://localhost:5252/api/diagnostics/bolt')
+      .then(response => response.json())
+      .then(data => {
+          // print out the C# data to console
+          console.log("Data received from C#:", data)
+          setBoltData(data)
+      })
+      .catch(error => console.error("Error fetching data:", error))
+  }, [])
+
   return (
     <Canvas>
       <ambientLight intensity={0.5} />
