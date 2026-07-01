@@ -10,7 +10,7 @@ public class RobotNode
 {
     // Identity
     public int Id { get; set; }
-    public string PartName { get; set; }
+    public string PartName { get; set; } = string.Empty;
 
     // Transform (X, Y, Z coordinates)
     public float[] Position { get; set; } = new float[3];
@@ -19,7 +19,7 @@ public class RobotNode
 
     // Visual Primitive
     public ShapeType PartShape { get; set; }
-    public float[] Dimensions { get; set; } // e.g. [width, height, depth] or [radius, height]
+    public float[] Dimensions { get; set; } = Array.Empty<float>(); // e.g. [width, height, depth] or [radius, height]
 
     // Hierarchy (The N-ary Tree mechanism)
     public List<RobotNode> Children { get; set; } = new List<RobotNode>();
