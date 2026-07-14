@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { RobotNodeComponent } from './RobotNodeComponent';
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
+import { useState, useEffect } from 'react'
 
 export default function App() {
   // Establish the memory bank for the robot data (starting at null)
