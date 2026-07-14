@@ -8,6 +8,12 @@ builder.Services.AddCors(options => {
     });
 });
 
+// Convert enums to their string names when serializing
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+});
+
 var app = builder.Build();
 
 app.UseCors("AllowAll");
