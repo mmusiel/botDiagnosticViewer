@@ -2,53 +2,41 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { useState, useEffect } from 'react'
 
-function Bolt({ data }) {
-  if (!data) return null;
+export default function App() {
+  // Establish the memory bank for the robot data (starting at null)
+  const [robotData, setRobotData] = useState(null);
 
-  return (
-    <group>
-      {/* Bolt Shaft */}
-      <mesh position={[0, 0, 0]}>
-        <cylinderGeometry args={[0.5, 0.5, data.shaftLength, 32]} />
-        <meshStandardMaterial color="gray" />
-      </mesh>
-
-      {/* Bolt Head */}
-      {/* Need to adjust dynamically based on shaft length.
-          Divide the shaftLength by 2 to find the top edge, then add 0.25 to sit
-          the head on top */}
-      <mesh position={[0, (data.shaftLength / 2) + 0.25, 0]}>
-        <cylinderGeometry args={[data.headRadius, data.headRadius, 0.5, 6]} />
-        <meshStandardMaterial color={`#${data.hexColor}`} />
-      </mesh>
-    </group>
-  )
-}
-
-function App() {
-  // state variable to hold backend data
-  const [boltData, setBoltData] = useState(null)
-
-  // make the call to th C# door when the app loads
   useEffect(() => {
-    fetch('http://localhost:5252/api/diagnostics/bolt')
-      .then(response => response.json())
-      .then(data => {
-          // print out the C# data to console
-          console.log("Data received from C#:", data)
-          setBoltData(data)
-      })
-      .catch(error => console.error("Error fetching data:", error))
-  }, [])
+    // Fetch the data when the component mounts
+    async function fetchRobot() {
+      try {
+        const response = await fetch('http://localhost:5252/api/diagnostics/robot');
+        // Parse the JSON
+        const data = await response.json();
+        console.log("Data received from C#:", data);
+        // Save it to the state using setRobotData
+        setRobotData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
 
+    // run the app
+    fetchRobot();
+  }, []); // Empty array means "only run once on mount"
+
+  // If data hasn't arrived yet, show a loading message
+  if (!robotData) return <div style={{ color: 'white' }}>Loading Optimus Diagnostics...</div>;
+
+  // Once data arrives, render the 3D Canvas
   return (
-    <Canvas>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 5, 5]} />
-      <Bolt data={boltData}/>
-      <OrbitControls />
-    </Canvas>
-  )
+    <div style={{ width: '100vw', height: '100vh', backgroundColor: '#1a1a1a' }}>
+      <Canvas camera={{ position: [0, 5, 10] }}>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[10, 10, 5]} />        
+        {/* Render root recursive node */}
+        <RobotNodeComponent node={robotData} />       
+      </Canvas>
+    </div>
+  );
 }
-
-export default App
