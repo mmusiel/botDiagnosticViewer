@@ -17,7 +17,7 @@ public static class RobotFactory
                     Id = 2,
                     PartName = "LeftUpperArm",
                     PartShape = ShapeType.Cylinder,
-                    Dimensions = new float[] { 0.5f, 2.0f },
+                    Dimensions = new float[] { 0.5f, 0.5f, 2.0f },
                     Position = new float[] { -1.5f, 1.0f, 0.0f }
                 },
                 new RobotNode
@@ -25,7 +25,7 @@ public static class RobotFactory
                     Id = 3,
                     PartName = "RightUpperArm",
                     PartShape = ShapeType.Cylinder,
-                    Dimensions = new float[] { 0.5f, 2.0f },
+                    Dimensions = new float[] { 0.5f, 0.5f, 2.0f },
                     Position = new float[] { 1.5f, 1.0f, 0.0f }
                 }
             }
