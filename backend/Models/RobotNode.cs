@@ -12,10 +12,6 @@ public class RobotNode
     public int Id { get; set; }
     public string PartName { get; set; } = string.Empty;
 
-    // Transform (X, Y, Z coordinates)
-    public float[] Position { get; set; } = new float[3];
-    public float[] Rotation { get; set; } = new float[3];
-    public float[] Scale { get; set; } = new float[3] { 1.0f, 1.0f, 1.0f };
 
     // Visual Primitive
     public ShapeType PartShape { get; set; }
@@ -23,4 +19,8 @@ public class RobotNode
 
     // Hierarchy (The N-ary Tree mechanism)
     public List<RobotNode> Children { get; set; } = new List<RobotNode>();
+
+    // Transform
+    public float[] PivotPosition { get; set; } = new float[3];
+    public float[] JointRotation { get; set; } = new float[3];
 }
